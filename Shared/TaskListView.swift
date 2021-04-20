@@ -15,13 +15,18 @@ struct TaskListView: View {
         List {
             ForEach(taskStore.tasks) { task in
                 TaskView(title: task.title)
+                    .contextMenu {
+                        Button("Delete") {
+                            taskStore.remove(task)
+                        }
+                    }
             }.onDelete { indexSet in
                 indexSet.forEach { index in
                     let task = taskStore.tasks[index]
                     taskStore.remove(task)
                 }
             }
-        }
+        }.animation(.easeIn)
     }
 }
 
